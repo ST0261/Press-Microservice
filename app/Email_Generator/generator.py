@@ -3,12 +3,19 @@ from string import Template
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
+import requests
 
-from fetch_users import getUsers
 
 MY_ADDRESS = 'sistema.LosFiels@gmail.com'
 PASSWORD = 'asdfghjkl1234567890'
 
+
+def getUsers():
+    res_get = requests.get('http://fiel.tk/membership/user/all')
+    status, data = res_get.status_code, res_get.json()
+    return data['users']
+
+    
 def read_template():
     """
     Returns a Template object comprising the contents of the 
@@ -41,11 +48,11 @@ def send(contract):
 
             msg = MIMEMultipart('alternative')
             msg['From']=MY_ADDRESS
-            msg['To']= user['email']
+            msg['To']= user['user_email']
             msg['Subject']= subject
 
             plain_msg = content
-            html_msg = message_template.substitute({'USERNAME': user['name'] , 'CONTENT': content})
+            html_msg = message_template.substitute({'USERNAME': user['user_name'] , 'CONTENT': content})
 
             msg.attach(MIMEText(plain_msg, 'plain'))
             msg.attach(MIMEText(html_msg, 'html'))
