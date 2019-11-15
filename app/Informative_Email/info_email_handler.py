@@ -29,4 +29,4 @@ def index():
 @press_router.route('/send', methods=['POST'])
 def send_comunicated():
     data = request.get_json()
-    return jsonify(generator.send(data))
+    return jsonify({'status':'ok'})

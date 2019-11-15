@@ -18,7 +18,7 @@ def send_month():
 
     content = getEmailContent(data['products_discount'])
 
-    return generator.send({"emails":
+    generator.send({"emails":
                 [
                     {
                         "subject": "Descuentos del mes!",
@@ -27,6 +27,8 @@ def send_month():
                 ]
             }
         )
+
+    return jsonify({'status':'ok'})
 
 def getEmailContent(data):
     body ='<table style="width:100%">'
