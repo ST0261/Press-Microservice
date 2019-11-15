@@ -15,18 +15,19 @@ def getUsers():
     status, data = res_get.status_code, res_get.json()
     return data['users']
 
-    
+
 def read_template():
     """
     Returns a Template object comprising the contents of the 
     file specified by filename.
     """
 
-    filename = "template.html"
+    filename = requests.get('https://raw.githubusercontent.com/ST0261/Press-Microservice/master/app/Email_Generator/template.html').text
     
-    with open(filename, 'r', encoding='utf-8') as template_file:
-        template_file_content = template_file.read()
-    return Template(template_file_content)
+    
+    #with open(filename, 'r', encoding='utf-8') as template_file:
+        #template_file_content = template_file.read()
+    return Template(filename)
 
 def send(contract):
     # set up the SMTP server
